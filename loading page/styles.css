@@ -1,0 +1,111 @@
+body, html {
+  margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden;
+  background: #181c24; /* dark techy background */
+}
+.bubble {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #4f8cff 60%, #6ee7b7 100%);
+  border-radius: 50%;
+  animation: shrinkBubble 2s forwards;
+  z-index: 10;
+}
+@keyframes shrinkBubble {
+  0% {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border-radius: 50%;
+  }
+}
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #4f8cff 60%, #6ee7b7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.bubble-loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 0 40px 10px #4f8cff44;
+  animation: bubbleScale 1.5s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+}
+
+@keyframes bubbleScale {
+  0% { transform: scale(0.2); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  80% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.gif-loader-container {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  background: #181c24;
+  z-index: 100;
+}
+.loader-gif {
+  width: 320px; max-width: 80vw; max-height: 60vh; border-radius: 18px;
+  box-shadow: 0 8px 32px #00eaff22;
+}
+.app-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  color: #fff;
+  opacity: 0;
+  margin-top: 40px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-shadow: 0 2px 16px #00eaff99;
+  transition: opacity 1s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.app-name.visible {
+  opacity: 1;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+/* Insert new CSS rules for zoom-in and zoom-out transitions */
+.zoom-in {
+  transform: scale(1.5);
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.zoom-out {
+  transform: scale(0.1);
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.loader-video {
+  width: 480px;
+  max-width: 90vw;
+  max-height: 75vh;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #00eaff22;
+  object-fit: cover;
+  background: #181c24;
+  display: block;
+}

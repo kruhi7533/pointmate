@@ -1,0 +1,12 @@
+{
+  "name": "pointmate-loading-page",
+  "version": "1.0.0",
+  "description": "Loading page for PointMate application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
