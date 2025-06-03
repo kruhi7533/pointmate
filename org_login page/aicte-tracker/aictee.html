@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <title>Institutional Login | Education Portal</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Montserrat', sans-serif;
+      }
+
+      body{
+          background-color: #c9d6ff;
+          background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          height: 100vh;
+      }
+
+      .container{
+          background-color: #fff;
+          border-radius: 30px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+          position: relative;
+          overflow: hidden;
+          width: 900px;
+          max-width: 100%;
+          min-height: 600px;
+      }
+
+      .container p{
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.3px;
+          margin: 20px 0;
+      }
+
+      .container span{
+          font-size: 12px;
+      }
+
+      .container a{
+          color: #333;
+          font-size: 13px;
+          text-decoration: none;
+          margin: 15px 0 10px;
+      }
+
+      .container button{
+          background-color: #2da0a8;
+          color: #fff;
+          font-size: 12px;
+          padding: 10px 45px;
+          border: 1px solid transparent;
+          border-radius: 8px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          margin-top: 10px;
+          cursor: pointer;
+      }
+
+      .container button.hidden{
+          background-color: transparent;
+          border-color: #fff;
+      }
+
+      .container form{
+          background-color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          padding: 0 40px;
+          height: 100%;
+      }
+
+      .container input, .container select{
+          background-color: #eee;
+          border: none;
+          margin: 8px 0;
+          padding: 10px 15px;
+          font-size: 13px;
+          border-radius: 8px;
+          width: 100%;
+          outline: none;
+      }
+
+      .form-container{
+          position: absolute;
+          top: 0;
+          height: 100%;
+          transition: all 0.6s ease-in-out;
+      }
+
+      .sign-in{
+          left: 0;
+          width: 50%;
+          z-index: 2;
+      }
+
+      .container.active .sign-in{
+          transform: translateX(100%);
+      }
+
+      .sign-up{
+          left: 0;
+          width: 50%;
+          opacity: 0;
+          z-index: 1;
+      }
+
+      .container.active .sign-up{
+          transform: translateX(100%);
+          opacity: 1;
+          z-index: 5;
+          animation: move 0.6s;
+      }
+
+      @keyframes move{
+          0%, 49.99%{
+              opacity: 0;
+              z-index: 1;
+          }
+          50%, 100%{
+              opacity: 1;
+              z-index: 5;
+          }
+      }
+
+      .social-icons{
+          margin: 20px 0;
+      }
+
+      .social-icons a{
+          border: 1px solid #ccc;
+          border-radius: 20%;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 3px;
+          width: 40px;
+          height: 40px;
+      }
+
+      .toggle-container{
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 50%;
+          height: 100%;
+          overflow: hidden;
+          transition: all 0.6s ease-in-out;
+          border-radius: 150px 0 0 100px;
+          z-index: 1000;
+      }
+
+      .container.active .toggle-container{
+          transform: translateX(-100%);
+          border-radius: 0 150px 100px 0;
+      }
+
+      .toggle{
+          background-color: #2da0a8;
+          height: 100%;
+          background: linear-gradient(to right, #5c6bc0, #2da0a8);
+          color: #fff;
+          position: relative;
+          left: -100%;
+          height: 100%;
+          width: 200%;
+          transform: translateX(0);
+          transition: all 0.6s ease-in-out;
+      }
+
+      .container.active .toggle{
+          transform: translateX(50%);
+      }
+
+      .toggle-panel{
+          position: absolute;
+          width: 50%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          padding: 0 30px;
+          text-align: center;
+          top: 0;
+          transform: translateX(0);
+          transition: all 0.6s ease-in-out;
+      }
+
+      .toggle-left{
+          transform: translateX(-200%);
+      }
+
+      .container.active .toggle-left{
+          transform: translateX(0);
+      }
+
+      .toggle-right{
+          right: 0;
+          transform: translateX(0);
+      }
+
+      .container.active .toggle-right{
+          transform: translateX(200%);
+      }
+
+      .user-type {
+          display: flex;
+          justify-content: space-around;
+          width: 100%;
+          margin-bottom: 15px;
+      }
+
+      .user-type label {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+      }
+
+      .user-type input {
+          margin-right: 5px;
+          width: auto;
+      }
+
+      .form-section {
+          width: 100%;
+          margin-bottom: 10px;
+      }
+
+      .form-section h3 {
+          font-size: 14px;
+          margin-bottom: 8px;
+          color: #555;
+          text-align: left;
+      }
+
+      .scrollable-form {
+          overflow-y: auto;
+          max-height: 400px;
+          width: 100%;
+          padding-right: 10px;
+      }
+
+      .scrollable-form::-webkit-scrollbar {
+          width: 5px;
+      }
+
+      .scrollable-form::-webkit-scrollbar-thumb {
+          background: #ccc;
+          border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form>
+          <div class="scrollable-form">
+            <h1>Institutional Registration</h1>
+            <div class="social-icons">
+              <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <span>Register with your institutional credentials</span>
+            
+            <div class="form-section">
+              <h3>Personal Information</h3>
+              <input type="text" placeholder="Full Name" name="fullName" required>
+              <input type="text" placeholder="Designation" name="designation" required>
+              <input type="tel" placeholder="Contact Number" name="contactNumber" required>
+            </div>
+            
+            <div class="form-section">
+              <h3>Login Credentials</h3>
+              <input type="email" placeholder="Organization Email ID" name="organizationEmail" required>
+              <input type="password" placeholder="Password" name="password" required>
+              <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
+            </div>
+            
+            <div class="form-section">
+              <h3>Institutional Information</h3>
+              <input type="text" placeholder="Institution Name" name="institutionName" required>
+              <input type="text" placeholder="AICTE Approval Number" name="aicteApprovalNumber" required>
+              <input type="text" placeholder="Authorized Person's Name" name="authorizedPersonName" required>
+            </div>
+          </div>
+          <button>Register Institution</button>
+        </form>
+      </div>
+      <div class="form-container sign-in">
+        <form>
+          <h1>Institutional Login</h1>
+          <div class="social-icons">
+            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+          
+          <input type="text" placeholder="Institution Name" name="institutionName" required autocomplete="off">
+          <input type="email" placeholder="Organization Email ID" name="organizationEmail" required autocomplete="off">
+          <input type="password" placeholder="Password" name="password" required autocomplete="off">
+          <a href="#">Forgot Your Password?</a>
+          <button>Sign In</button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome Back!</h1>
+            <p>Enter your institutional credentials to access the portal</p>
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>New Institution?</h1>
+            <p>Register with all required credentials to get access</p>
+            <button class="hidden" id="register">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const container = document.getElementById("container");
+      const registerBtn = document.getElementById("register"); // Register button - with in the sign in section
+      const loginBtn = document.getElementById("login");  
+      const registerForm = document.querySelector('.sign-up form');
+      const signInForm = document.querySelector('.sign-in form');
+
+      // Handle Register button click
+      registerBtn.addEventListener("click", () => {
+        container.classList.add("active");
+      });
+
+      // Handle Login button click
+      loginBtn.addEventListener("click", () => {
+        container.classList.remove("active");
+      });
+
+      // Handle Register form submission
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log('Register form submitted');
+
+        // Collect form data
+        const formData = new FormData(registerForm);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        // Basic password confirmation check (can be enhanced)
+        if (data.password !== data.confirmPassword) {
+          alert('Passwords do not match!');
+          return;
+        }
+
+        // Remove confirm password field as it's not needed in the backend
+        delete data.confirmPassword;
+
+        try {
+          const response = await fetch('http://localhost:3000/api/pointmate/organizations/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Redirect to the React app with email as URL parameter
+            const redirectUrl = `http://localhost:5173/?org_email=${encodeURIComponent(data.organizationEmail)}`;
+            console.log('Redirecting to:', redirectUrl);
+            window.location.href = redirectUrl;
+          } else {
+            alert(result.message || 'Organization registration failed.');
+          }
+        } catch (error) {
+          console.error('Registration Error:', error);
+          alert('An error occurred during registration. Please try again.');
+        }
+      });
+
+      // Handle Sign In form submission
+      signInForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log('Sign In form submitted');
+        
+        // Collect form data
+        const formData = new FormData(signInForm);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        try {
+          const response = await fetch('http://localhost:3000/api/pointmate/organizations/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Redirect to the React app with email as URL parameter
+            const redirectUrl = `http://localhost:5173/?org_email=${encodeURIComponent(data.organizationEmail)}`;
+            console.log('Redirecting to:', redirectUrl);
+            window.location.href = redirectUrl;
+          } else {
+            // Login failed, show alert with message from backend
+            alert(result.message || 'Login failed. Please check your credentials.');
+          }
+        } catch (error) {
+          console.error('Login Error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+    </script>
+  </body>
+</html>
